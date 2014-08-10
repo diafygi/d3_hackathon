@@ -3,8 +3,113 @@
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
         <title>d3_hackathon</title>
+        <script src="d3.v3.min.js"></script>
+        <style>
+            #map{float:right;}
+        </style>
     </head>
     <body>
-        Hello World!
+        <div id="map"></div>
+        <ul id="candidates"></ul>
+        <script>
+
+            //create map selection
+            var width = 300,
+                height = 300;
+            var svg = d3.select("#map").append("svg")
+                .attr("width", width)
+                .attr("height", height);
+            var data = [];
+
+            d3.json("out.json", function(error, districts){
+                //get the district mapping domains
+                var data_max = [undefined, undefined],
+                    data_min = [undefined, undefined];
+
+                //loop through all districts
+                for(var d = 0; d < districts.features.length; d++){
+
+                    //loop through the district subsections
+                    for(var s = 0; s < districts.features[d].geometry.coordinates.length; s++){
+
+                        //subsections have an extra layer nesting that you need to remove
+                        if(districts.features[d].geometry.coordinates.length !== 1){
+                            districts.features[d].geometry.coordinates[s] = districts.features[d].geometry.coordinates[s][0];
+                        }
+
+                        //loop through the district subsections to build the dataset
+                        //TODO: this could probably be done easier in d3.min() and d3.max()
+                        for(var i = 0; i < districts.features[d].geometry.coordinates[s].length; i++){
+                            var coord = districts.features[d].geometry.coordinates[s][i];
+
+                            //set the max/min of the dataset
+                            if(data_max[0] === undefined || data_max[0] < coord[0]){
+                                data_max[0] = coord[0];
+                            }
+                            if(data_max[1] === undefined || data_max[1] < coord[1]){
+                                data_max[1] = coord[1];
+                            }
+                            if(data_min[0] === undefined || data_min[0] > coord[0]){
+                                data_min[0] = coord[0];
+                            }
+                            if(data_min[1] === undefined || data_min[1] > coord[1]){
+                                data_min[1] = coord[1];
+                            }
+                        }
+                    }
+                }
+                var X = d3.scale.linear()
+                    .domain([data_min[0], data_max[0]])
+                    .range([0, width]);
+                var Y = d3.scale.linear()
+                    .domain([data_min[1], data_max[1]])
+                    .range([0, height]);
+
+                //converts the list of coordinates to a path "d" attribute
+                var boundary = d3.svg.line()
+                    .x(function(d){
+                        return X(d[0]);
+                    })
+                    .y(function(d){
+                        return height - Y(d[1]);
+                    })
+                    .interpolate("linear");
+
+                //appends boundaries in groupings
+                //(since some boundaries have multiple subsections)
+                svg.selectAll("g")
+                    .data(districts.features)
+                  .enter().append("g")
+                    .attr("id", function(d){
+                        return d.properties.supdist;
+                    });
+
+                var dists = svg.selectAll("g")
+                    .data(districts.features);
+
+                dists.enter().append("g")
+                    .attr("id", function(d){return d.properties.supdist;});
+
+                dists.selectAll("path")
+                    .data(function(d){return d.geometry.coordinates;})
+                  .enter().append("path")
+                    .attr("d", function(d, i){return boundary(d);})
+                    .attr("stroke", "blue")
+                    .attr("stroke-width",2)
+                    .attr("fill", "#ffffff")
+                    .on("mouseenter", function(){
+                        d3.select(this.parentNode).selectAll("path").attr("fill", "#ff0000");
+                    })
+                    .on("mouseout", function(){
+                        d3.select(this.parentNode).selectAll("path").attr("fill", "#ffffff");
+                    })
+                    .on("click", function(){
+                        console.log(this.parentNode.id);
+                    });
+            });
+
+        </script>
     </body>
 </html>
+
+
