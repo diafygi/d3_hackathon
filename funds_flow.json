@@ -1,0 +1,102 @@
+{
+    "name": "District A",
+    "districtId": "321",
+    "children": [
+        {
+            'elect_year': '2009'
+            'children': [
+                {
+                    "candidate": "Candidate A",
+                    "type": "candidate",
+                    "total_inside_donations": 12345,
+                    "total_outside_donations": 54321
+                },
+                {
+                    "candidate": "Candidate B",
+                    "type": "candidate",
+                    "total_inside_donations": 12345,
+                    "total_outside_donations": 54321
+                },
+                {
+                    "candidate": "Candidate C",
+                    "type": "candidate",
+                    "total_inside_donations": 12345,
+                    "total_outside_donations": 54321
+                }
+            ]
+        },
+        {
+            'elect_year': '2011'
+            'children': [
+                {
+                    "candidate": "Candidate D",
+                    "type": "candidate",
+                    "total_inside_donations": 12345,
+                    "total_outside_donations": 54321
+                },
+                {
+                    "candidate": "Candidate E",
+                    "type": "candidate",
+                    "total_inside_donations": 12345,
+                    "total_outside_donations": 54321
+                },
+                {
+                    "candidate": "Candidate F",
+                    "type": "candidate",
+                    "total_inside_donations": 12345,
+                    "total_outside_donations": 54321
+                }
+            ]
+        }
+    ],
+    "name": "District B",
+    "districtId": "321",
+    "children": [
+        {
+            'elect_year': '2009'
+            'children': [
+                {
+                    "candidate": "Candidate G",
+                    "type": "candidate",
+                    "total_inside_donations": 12345,
+                    "total_outside_donations": 54321
+                },
+                {
+                    "candidate": "Candidate H",
+                    "type": "candidate",
+                    "total_inside_donations": 12345,
+                    "total_outside_donations": 54321
+                },
+                {
+                    "candidate": "Candidate I",
+                    "type": "candidate",
+                    "total_inside_donations": 12345,
+                    "total_outside_donations": 54321
+                }
+            ]
+        },
+        {
+            'elect_year': '2011'
+            'children': [
+                {
+                    "candidate": "Candidate J",
+                    "type": "candidate",
+                    "total_inside_donations": 12345,
+                    "total_outside_donations": 54321
+                },
+                {
+                    "candidate": "Candidate K",
+                    "type": "candidate",
+                    "total_inside_donations": 12345,
+                    "total_outside_donations": 54321
+                },
+                {
+                    "candidate": "Candidate L",
+                    "type": "candidate",
+                    "total_inside_donations": 12345,
+                    "total_outside_donations": 54321
+                }
+            ]
+        }
+    ]
+}
